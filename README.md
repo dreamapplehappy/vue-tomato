@@ -13,6 +13,7 @@ yarn add vue-tomato
 + 第一步，在项目中引入**vue-tomato**
     ```javascript
     import Tomato from 'vue-tomato';
+    // ...
     Vue.use(Tomato);
     ```
 + 第二步，在页面上指定的固定元素上添加指令**v-tomato-toggle**
