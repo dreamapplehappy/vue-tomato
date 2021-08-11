@@ -1,5 +1,7 @@
 // 获取页面的高度
-import getClientHeight from "./getClientHeight";
+import getClientHeight from './getClientHeight';
+
+const RESIZE_EVENT_NAME = 'resize';
 
 function Tomato() {}
 
@@ -38,18 +40,29 @@ Tomato.install = function(Vue) {
 					} else {
 						el.style.display = preDisplay;
 					}
+				};
+				window.addEventListener(RESIZE_EVENT_NAME, tomatoToggleHandler);
+			}
+		},
+		update(el, binding) {
+			const conf = binding.value;
+			if (conf) {
+				const { isFooterToggleActive } = conf;
+				if(isFooterToggleActive) {
+					window.addEventListener(RESIZE_EVENT_NAME, tomatoToggleHandler);
+				} else {
+					window.removeEventListener(RESIZE_EVENT_NAME, tomatoToggleHandler);
 				}
-				window.addEventListener('resize', tomatoToggleHandler)
 			}
 		},
 		unbind() {
 			// 组件卸载后，移除对应的事件处理函数
 			if (tomatoToggleHandler) {
-				window.removeEventListener('resize', tomatoToggleHandler)
+				window.removeEventListener(RESIZE_EVENT_NAME, tomatoToggleHandler);
 				tomatoToggleHandler = null;
 			}
 		}
-	})
-}
+	});
+};
 
 export default Tomato;
